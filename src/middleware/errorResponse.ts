@@ -4,7 +4,7 @@ function errorResponse(
   res: Response,
   status: number,
   message: string,
-  field: string
+  field?: string
 ) {
   return res.status(status).json({
     error: {

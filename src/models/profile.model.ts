@@ -1,5 +1,5 @@
 export interface RegisterProfile {
-  usernames: string;
+  username: string;
   bio?: string | null;
-  follower: number;
+  followers: number;
 }

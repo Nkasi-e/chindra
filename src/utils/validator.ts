@@ -1,6 +1,6 @@
-import Joi, { ObjectSchema, ValidationError } from 'joi';
+import Joi, { ObjectSchema } from 'joi';
 import ErrorMessage from './customMessage';
-import { RegisteredUser } from '../models';
+import { RegisteredUser, RegisterProfile } from '../models';
 
 interface ValidationResult {
   error?: {
@@ -33,6 +33,12 @@ class EntryValidator {
     password: Joi.string().required().messages(ErrorMessage.password),
   });
 
+  private static validateProfileSchema: ObjectSchema = Joi.object({
+    username: Joi.string().required().messages(ErrorMessage.username),
+    followers: Joi.number().required().messages(ErrorMessage.followers),
+    bio: Joi.string().max(100).messages(ErrorMessage.bio),
+  });
+
   private static options: any = { language: { key: '{{key}}' } };
 
   static validateSignup(entry: RegisteredUser): ValidationResult {
@@ -41,6 +47,10 @@ class EntryValidator {
 
   static validateLogin(entry: RegisteredUser): ValidationResult {
     return this.validateLoginSchema.validate(entry, this.options);
+  }
+
+  static validateProfileInput(entry: RegisterProfile): ValidationResult {
+    return this.validateProfileSchema.validate(entry, this.options);
   }
 }
 

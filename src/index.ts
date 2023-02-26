@@ -1,6 +1,7 @@
 import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
 import authRouter from './routes/auth.router';
+import profileRouter from './routes/profile.router';
 import { errorHandler } from './middleware';
 
 const app: Application = express();
@@ -11,7 +12,8 @@ app.use(cors());
 app.use(express.json());
 app.use(errorHandler);
 
-app.use('/api/auth', authRouter);
+app.use('/api/', authRouter);
+app.use('/api/', profileRouter);
 
 app.get('/', (req: Request, res: Response): void => {
   res.send('Welcome to typescript express!');

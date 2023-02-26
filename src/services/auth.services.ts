@@ -80,5 +80,19 @@ export const loginUser = async (input: RegisteredUser, res: Response) => {
       };
     }
   }
-  return errorResponse(res, 403, 'Invalid Credentials', '');
+  return errorResponse(res, 403, 'Invalid Credentials');
+};
+
+export const getUserDetails = async (email: string) => {
+  const user = await prisma.users.findUnique({
+    where: {
+      email: email,
+    },
+    select: {
+      id: true,
+      email: true,
+      created_at: true,
+    },
+  });
+  return { user };
 };
